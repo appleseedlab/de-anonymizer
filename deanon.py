@@ -35,6 +35,8 @@ main_parser.add_argument("--candidates", required=False, action="store_true",
                               dest="candidates", help="Only output candidate addresses (flag)")
 main_parser.add_argument("-m", required=False, default=12,
                               dest="maxc", help="Maximum number of candidate addresses (defaults to 12)")
+main_parser.add_argument("-scraper-api-key", required=False, default="",
+                              dest="scraper_key", help="Scraper API key (optional)")
 
 dbf_parser = subparsers.add_parser(
     'dbf', help='Parse a DBF file')
@@ -123,7 +125,7 @@ elif args.action == "deanon":
         
         exit()
     for wpq in wp_queries:
-        search_wp(wpq)
+        search_wp(wpq,args.scraper_key)
     addy_map = parse_all_html("html_files")
     
     de_anoned = correlate_partials(searches, addy_map)

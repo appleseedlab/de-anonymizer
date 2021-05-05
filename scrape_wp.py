@@ -4,12 +4,13 @@ import time
 from os import path
 import sys
 import os
+from requests.exceptions import ReadTimeout
 
 payload={}
 headers = {}
 
 
-def scrape_geographic(city, state):
+def scrape_geographic(city, state, scraper_key=""):
     url = f"https://geographic.org/streetview/usa/{state.lower()}/{city.lower()}.html"
     out_dir = "geographic.org"
     os.makedirs(out_dir, exist_ok=True)
@@ -23,7 +24,7 @@ def scrape_geographic(city, state):
     with open( out_dir + "/" + output_file, "w") as f:
         f.write(data)
 
-def search_wp(search):
+def search_wp(search,scraper_key=""):
     
     suffx = ".html"
     street = search[: search.index("/")]
@@ -33,9 +34,16 @@ def search_wp(search):
     search = search.replace(" ", "-")
     output_file = street + f" - {city_state}"
 
-    url = "https://www.whitepages.com/address/" + search.strip()
-    #print("getting " + url)
-    res = requests.request("GET", url, headers=headers, data=payload, timeout=1)
+    wp_url = f"https://www.whitepages.com/address/{search.strip()}"
+    if len(scraper_key) > 0:
+        url = f"http://api.scraperapi.com/?api_key={scraper_key}&url={wp_url}"
+    else:
+        url = wp_url
+    print("Fetching " + url, file=sys.stderr)
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload, timeout=10)
+    except ReadTimeout:
+        return
     if res.status_code != 200:
         print(f"HTTP ERROR (code {res.status_code})::{url}",file=sys.stderr)
         suffx = ".f3"

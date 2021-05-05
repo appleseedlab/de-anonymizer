@@ -48,6 +48,7 @@ You need:
         joseph,Joseph R Biden,720 gree,720 Greenhill Ave,Wilmington,DE,https://www.whitepages.com/address/720-Greenhill-Ave/Wilmington-DE
         ron,Ronald Desantis,700 ad,700 Adams St,Tallahassee,FL,https://www.whitepages.com/address/700-Adams-St/Tallahassee-FL
         ```
+    2. If you have an account with scraperapi.com, you can pass your API key in with `-scraper-api-key xxx`. This will help mitigate 403s and 401s.
 2. Help: `deanon.py --help`
 
 3. Modules: most of the source files can be ran as stand-alone scripts. See the usage prompt after running as main for details.
