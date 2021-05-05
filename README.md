@@ -13,11 +13,11 @@ Beautiful Soup 4 and requests
 
 You need:
 
-1. A CSV file with the people you wish to de-anonymize. This file should have the following columns: `partial name, partial address, city, state`
+1. A CSV file with the people you wish to de-anonymize. This file should have the following columns: `partialName,partialAddress,City,State`
 
 	```
 
-	joseph,720 Gree,Wilmington,DE
+	josep,720 Gree,Wilmington,DE
 	ron,700 Ad,Tallahassee,FL
 
 	```
@@ -41,7 +41,12 @@ You need:
   
 
 1. de-anonymize: `deanon.py deanon -t examples/targets -s examples/streets`
-
+    1. output: 
+        ```
+        partialName,FullName,partialAddress,FullAddress,URL
+        joseph,Joseph R Biden,720 gree,720 Greenhill Ave,Wilmington,DE,https://www.whitepages.com/address/720-Greenhill-Ave/Wilmington-DE
+        ron,Ronald Desantis,700 ad,700 Adams St,Tallahassee,FL,https://www.whitepages.com/address/700-Adams-St/Tallahassee-FL
+        ```
 2. Help: `deanon.py --help`
 
 3. Modules: most of the source files can be ran as stand-alone scripts. See the usage prompt after running as main for details.
