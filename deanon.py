@@ -33,6 +33,8 @@ main_parser.add_argument("-s", required=True, metavar="STEETS",
                               dest="streets", help="Comma-seperated list of streets for bruteforce. Format: Main St,Orlando,FL")
 main_parser.add_argument("--candidates", required=False, action="store_true",
                               dest="candidates", help="Only output candidate addresses (flag)")
+main_parser.add_argument("-m", required=False, default=12,
+                              dest="maxc", help="Maximum number of candidate addresses (defaults to 12)")
 
 dbf_parser = subparsers.add_parser(
     'dbf', help='Parse a DBF file')
@@ -106,7 +108,7 @@ elif args.action == "deanon":
 
             street_number, street_name = padd.split(" ")
             if not street_number.isnumeric(): continue
-            candidates = get_candidate_addresses(padd, records[state][city])
+            candidates = get_candidate_addresses(padd, records[state][city], int(args.maxc))
             
 
             for c in candidates:
